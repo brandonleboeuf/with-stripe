@@ -1,6 +1,6 @@
-# Example using Stripe with TypeScript and react-stripe-js
+# Example using Stripe with react-stripe-js
 
-This is a full-stack TypeScript example using:
+This is a full-stack (de-ypeScript-ed) example using:
 
 - Frontend:
   - Next.js and [SWR](https://github.com/vercel/swr)
