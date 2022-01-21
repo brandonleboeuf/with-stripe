@@ -1,8 +1,7 @@
-import { NextPage } from 'next'
 import Link from 'next/link'
 import Layout from '../components/Layout'
 
-const IndexPage: NextPage = () => {
+const IndexPage = () => {
   return (
     <Layout title="Home | Next.js + TypeScript Example">
       <ul className="card-list">

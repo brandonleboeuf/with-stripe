@@ -3,12 +3,12 @@ import Cors from 'micro-cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import Stripe from 'stripe'
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   // https://github.com/stripe/stripe-node#configuration
   apiVersion: '2020-03-02',
 })
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -21,12 +21,12 @@ const cors = Cors({
   allowMethods: ['POST', 'HEAD'],
 })
 
-const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const webhookHandler = async (req, res) => {
   if (req.method === 'POST') {
     const buf = await buffer(req)
-    const sig = req.headers['stripe-signature']!
+    const sig = req.headers['stripe-signature']
 
-    let event: Stripe.Event
+    let event;
 
     try {
       event = stripe.webhooks.constructEvent(buf.toString(), sig, webhookSecret)
@@ -42,15 +42,15 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Cast event data to Stripe object.
     if (event.type === 'payment_intent.succeeded') {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent
+      const paymentIntent = event.data.object
       console.log(`💰 PaymentIntent status: ${paymentIntent.status}`)
     } else if (event.type === 'payment_intent.payment_failed') {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent
+      const paymentIntent = event.data.object
       console.log(
         `❌ Payment failed: ${paymentIntent.last_payment_error?.message}`
       )
     } else if (event.type === 'charge.succeeded') {
-      const charge = event.data.object as Stripe.Charge
+      const charge = event.data.object
       console.log(`💵 Charge id: ${charge.id}`)
     } else {
       console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`)
@@ -64,4 +64,4 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default cors(webhookHandler as any)
+export default cors(webhookHandler)

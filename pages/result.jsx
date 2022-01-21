@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
 import Layout from '../components/Layout'
@@ -9,7 +8,7 @@ import ClearCart from '../components/ClearCart'
 import { fetchGetJSON } from '../utils/api-helpers'
 import useSWR from 'swr'
 
-const ResultPage: NextPage = () => {
+const ResultPage = () => {
   const router = useRouter()
 
   // Fetch CheckoutSession from static page via

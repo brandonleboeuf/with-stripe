@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import CustomDonationInput from '../components/CustomDonationInput'
 import StripeTestCards from '../components/StripeTestCards'
@@ -11,7 +11,7 @@ import * as config from '../config'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 const CARD_OPTIONS = {
-  iconStyle: 'solid' as const,
+  iconStyle: 'solid',
   style: {
     base: {
       iconColor: '#6772e5',
@@ -44,7 +44,7 @@ const ElementsForm = () => {
   const stripe = useStripe()
   const elements = useElements()
 
-  const PaymentStatus = ({ status }: { status: string }) => {
+  const PaymentStatus = ({ status }) => {
     switch (status) {
       case 'processing':
       case 'requires_payment_method':
@@ -70,13 +70,13 @@ const ElementsForm = () => {
     }
   }
 
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
+  const handleInputChange = (e) =>
     setInput({
       ...input,
       [e.currentTarget.name]: e.currentTarget.value,
     })
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Abort if form isn't valid
     if (!e.currentTarget.reportValidity()) return
@@ -97,14 +97,14 @@ const ElementsForm = () => {
     // Get a reference to a mounted CardElement. Elements knows how
     // to find your CardElement because there can only ever be one of
     // each type of element.
-    const cardElement = elements!.getElement(CardElement)
+    const cardElement = elements.getElement(CardElement)
 
     // Use your card Element with other Stripe.js APIs
-    const { error, paymentIntent } = await stripe!.confirmCardPayment(
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
       response.client_secret,
       {
         payment_method: {
-          card: cardElement!,
+          card: cardElement,
           billing_details: { name: input.cardholderName },
         },
       }

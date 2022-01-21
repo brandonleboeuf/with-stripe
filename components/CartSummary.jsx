@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import StripeTestCards from '../components/StripeTestCards'
 
@@ -18,7 +18,7 @@ const CartSummary = () => {
 
   useEffect(() => setCartEmpty(!cartCount), [cartCount])
 
-  const handleCheckout: React.FormEventHandler<HTMLFormElement> = async (
+  const handleCheckout= async (
     event
   ) => {
     event.preventDefault()

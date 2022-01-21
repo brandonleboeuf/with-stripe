@@ -1,12 +1,10 @@
-import { NextPage } from 'next'
-
 import { Elements } from '@stripe/react-stripe-js'
 import getStripe from '../utils/get-stripejs'
 
 import Layout from '../components/Layout'
 import ElementsForm from '../components/ElementsForm'
 
-const DonatePage: NextPage = () => {
+const DonatePage = () => {
   return (
     <Layout title="Donate with Elements | Next.js + TypeScript Example">
       <div className="page-container">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import CustomDonationInput from '../components/CustomDonationInput'
 import StripeTestCards from '../components/StripeTestCards'
@@ -14,13 +14,13 @@ const CheckoutForm = () => {
     customDonation: Math.round(config.MAX_AMOUNT / config.AMOUNT_STEP),
   })
 
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
+  const handleInputChange = (e) =>
     setInput({
       ...input,
       [e.currentTarget.name]: e.currentTarget.value,
     })
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     // Create a Checkout Session.
@@ -35,7 +35,7 @@ const CheckoutForm = () => {
 
     // Redirect to Checkout.
     const stripe = await getStripe()
-    const { error } = await stripe!.redirectToCheckout({
+    const { error } = await stripe.redirectToCheckout({
       // Make the id field from the Checkout Session creation API response
       // available to this file, so you can provide it as parameter here
       // instead of the {{CHECKOUT_SESSION_ID}} placeholder.

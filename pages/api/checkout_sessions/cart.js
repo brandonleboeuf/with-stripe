@@ -1,5 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-
 /*
  * Product data can be loaded from anywhere. In this case, we’re loading it from
  * a local JSON file, but this could also come from an async call to your
@@ -12,14 +10,14 @@ import { validateCartItems } from 'use-shopping-cart/src/serverUtil'
 import inventory from '../../../data/products.json'
 
 import Stripe from 'stripe'
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   // https://github.com/stripe/stripe-node#configuration
   apiVersion: '2020-03-02',
 })
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+  req,
+  res
 ) {
   if (req.method === 'POST') {
     try {
@@ -27,7 +25,7 @@ export default async function handler(
       const cartItems = req.body
       const line_items = validateCartItems(inventory, cartItems)
       // Create Checkout Sessions from body params.
-      const params: Stripe.Checkout.SessionCreateParams = {
+      const params = {
         submit_type: 'pay',
         payment_method_types: ['card'],
         billing_address_collection: 'auto',
@@ -38,7 +36,7 @@ export default async function handler(
         success_url: `${req.headers.origin}/result?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/use-shopping-cart`,
       }
-      const checkoutSession: Stripe.Checkout.Session =
+      const checkoutSession =
         await stripe.checkout.sessions.create(params)
 
       res.status(200).json(checkoutSession)
