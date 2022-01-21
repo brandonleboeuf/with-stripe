@@ -23,6 +23,7 @@ export default async function handler(
         payment_method_types: ['card'],
         amount: formatAmountForStripe(amount, CURRENCY),
         currency: CURRENCY,
+        // allow_promotion_codes: true,
         description: process.env.STRIPE_PAYMENT_DESCRIPTION ?? '',
       }
       const payment_intent =
